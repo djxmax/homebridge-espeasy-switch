@@ -5,13 +5,14 @@ module.exports = function(homebridge){
 	Service = homebridge.hap.Service;
 	Characteristic = homebridge.hap.Characteristic;
 	
-	homebridge.registerAccessory('homebridge-sonoff-basic-espeasy', 'SonoffBasicESPEasy', SonoffBasicESPEasy);
+	homebridge.registerAccessory('homebridge-espeasy-switch', 'ESPEasySwitch', ESPEasySwitch);
 }
 
-function SonoffBasicESPEasy(log, config){
+function ESPEasySwitch(log, config){
 	this.log = log;
-	this.name = config.name || 'Sonoff Switch';
+	this.name = config.name || 'ESPEasy Switch';
 	this.ip = config.ip;
+	this.port = config.port || '12';
 
 	if(!this.ip)
 		throw new Error('Your must provide IP address of the switch.');
@@ -21,9 +22,9 @@ function SonoffBasicESPEasy(log, config){
 	this.serviceInfo = new Service.AccessoryInformation();
 
 	this.serviceInfo
-		.setCharacteristic(Characteristic.Manufacturer, 'Sonoff')
+		.setCharacteristic(Characteristic.Manufacturer, 'ESPEasy')
 		.setCharacteristic(Characteristic.Model, 'Basic Switch')
-		.setCharacteristic(Characteristic.SerialNumber, 'EB1B-ED2E-5EA945508A66');
+		.setCharacteristic(Characteristic.SerialNumber, 'EB1B-ED2E-5EA945508A77');
 
 	this.service
 		.getCharacteristic(Characteristic.On)
@@ -31,12 +32,12 @@ function SonoffBasicESPEasy(log, config){
 		.on('set', this.setPowerState.bind(this));
 }
 
-SonoffBasicESPEasy.prototype = {
+ESPEasySwitch.prototype = {
 	getPowerState: function(callback){
 		var log = this.log;
 
 		request.get({
-			url: 'http://' + this.ip + '/control?cmd=status,gpio,12',
+			url: 'http://' + this.ip + '/control?cmd=status,gpio,' + this.port,
 			timeout: 120000
 		}, function(error, response, body){
 			if(!error && response.statusCode == 200){

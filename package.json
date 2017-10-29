@@ -1,14 +1,14 @@
 {
-  "name": "homebridge-sonoff-basic-espeasy",
+  "name": "homebridge-espeasy-switch",
   "version": "0.0.1",
-  "description": "Sonoff basic plugin for Homebridge.",
+  "description": "ESPEasy basic plugin for Homebridge.",
   "license": "MIT",
   "keywords": [
-    "homebridge-plugin", "sonoff", "espeasy"
+    "homebridge-plugin", "switch", "espeasy"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/seikan/homebridge-sonoff-basic-espeasy.git"
+    "url": "https://github.com/djxmax/homebridge-espeasy-switch.git"
   },
   "engines": {
     "node": ">=0.12.0",
